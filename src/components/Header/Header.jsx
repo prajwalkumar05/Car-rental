@@ -19,7 +19,7 @@ const navLinks = [
   },
 
   {
-    path: "/blogs",
+    path: "/blog",
     display: "Blog",
   },
   {
@@ -36,7 +36,7 @@ const Header = () => {
   return (
     <header className="header">
       {/* ============ header top ============ */}
-      <div className="header__top">
+      {/* <div className="header__top">
         <Container>
           <Row>
             <Col lg="6" md="6" sm="6">
@@ -61,10 +61,10 @@ const Header = () => {
             </Col>
           </Row>
         </Container>
-      </div>
+      </div> */}
 
       {/* =============== header middle =========== */}
-      <div className="header__middle">
+      {/* <div className="header__middle">
         <Container>
           <Row>
             <Col lg="4" md="3" sm="4">
@@ -118,7 +118,7 @@ const Header = () => {
             </Col>
           </Row>
         </Container>
-      </div>
+      </div> */}
 
       {/* ========== main navigation =========== */}
 
