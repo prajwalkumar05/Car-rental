@@ -6,15 +6,20 @@ import Helmet from "../components/Helmet/Helmet";
 import { useParams } from "react-router-dom";
 import BookingForm from "../components/UI/BookingForm";
 import PaymentMethod from "../components/UI/PaymentMethod";
+import { useCollection } from "../hooks/useCollection";
+import useGetData from "../hooks/useGetData";
 
 const CarDetails = () => {
   const { slug } = useParams();
 
-  const singleCarItem = carData.find((item) => item.carName === slug);
+  
+  const {result} = useGetData('cars',slug)
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [singleCarItem]);
+  if(!result){
+    return <h3>Loading</h3>
+  }
+
+  const singleCarItem=result;
 
   return (
     <Helmet title={singleCarItem.carName}>
@@ -22,7 +27,7 @@ const CarDetails = () => {
         <Container>
           <Row>
             <Col lg="6">
-              <img src={singleCarItem.imgUrl} alt="" className="w-100" />
+              <img src={singleCarItem.image} alt="" className="w-100" />
             </Col>
 
             <Col lg="6">
@@ -42,7 +47,7 @@ const CarDetails = () => {
                       <i class="ri-star-s-fill"></i>
                       <i class="ri-star-s-fill"></i>
                     </span>
-                    ({singleCarItem.rating} ratings)
+                    ( ratings)
                   </span>
                 </div>
 
@@ -116,8 +121,8 @@ const CarDetails = () => {
 
             <Col lg="5" className="mt-5">
               <div className="payment__info mt-5">
-                <h5 className="mb-4 fw-bold ">Payment Information</h5>
-                <PaymentMethod />
+                {/* <h5 className="mb-4 fw-bold ">Payment Information</h5> */}
+                {/* <PaymentMethod /> */}
               </div>
             </Col>
           </Row>

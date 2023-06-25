@@ -1,8 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import "../../styles/booking-form.css";
 import { Form, FormGroup } from "reactstrap";
 
 const BookingForm = () => {
+
+
+  const [bookingDeatils,setBookingDeatils] = useState({
+    fname:"",
+    lname:"",
+    email:"",
+    phone_number:"",
+    from:"",
+    to:"",
+    description:"",
+  })
+
   const submitHandler = (event) => {
     event.preventDefault();
   };

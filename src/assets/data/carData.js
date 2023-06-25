@@ -47,7 +47,7 @@ const carData = [
     rating: 132,
     carName: "BMW X3",
     imgUrl: img03,
-    model: "Model-2022",
+    model: "              ",
     price: 65,
     speed: "20kmpl",
     gps: "GPS Navigation",
