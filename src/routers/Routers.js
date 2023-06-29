@@ -9,6 +9,8 @@ import BlogDetails from "../pages/BlogDetails";
 import NotFound from "../pages/NotFound";
 import Contact from "../pages/Contact";
 import Test from "../pages/Test";
+import Login from "../components/Auth/Login";
+import Signup from "../components/Auth/Signup";
 
 const Routers = () => {
   return (
@@ -18,10 +20,12 @@ const Routers = () => {
       <Route path="/about" element={<About />} />
       <Route path="/cars" element={<CarListing />} />
       <Route path="/cars/:slug" element={<CarDetails />} />
-      <Route path="/blogs" element={<Blog />} />
+      <Route path="/register" element={<Blog />} />
       <Route path="/blogs/:slug" element={<BlogDetails />} />
       <Route path="/contact" element={<Contact />} />
+      <Route path="/login" element={<Login />} />
       <Route path="/test" element={<Test />} />
+      <Route path="/sign" element={<Signup />} />
     </Routes>
   );
 };

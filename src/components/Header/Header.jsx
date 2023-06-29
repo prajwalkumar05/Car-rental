@@ -3,6 +3,7 @@ import React, { useRef } from "react";
 import { Container, Row, Col } from "reactstrap";
 import { Link, NavLink } from "react-router-dom";
 import "../../styles/header.css";
+import { useLogout } from "../../hooks/useLogout";
 
 const navLinks = [
   {
@@ -19,8 +20,8 @@ const navLinks = [
   },
 
   {
-    path: "/blog",
-    display: "Blog",
+    path: "/register",
+    display: "Register",
   },
   {
     path: "/contact",
@@ -30,6 +31,8 @@ const navLinks = [
 
 const Header = () => {
   const menuRef = useRef(null);
+
+  const {logout} = useLogout()
 
   const toggleMenu = () => menuRef.current.classList.toggle("menu__active");
 
@@ -150,6 +153,7 @@ const Header = () => {
                 <input type="text" placeholder="Search" />
                 <span>
                   <i class="ri-search-line"></i>
+                  <button onClick={() => logout()} style={{color:"#fff"}}>Logout</button>
                 </span>
               </div>
             </div>

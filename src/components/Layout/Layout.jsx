@@ -6,17 +6,18 @@ import Routers from "../../routers/Routers";
 import Login from "../Auth/Login";
 import { useAuthContext } from "../../hooks/useAuthContext";
 
+
 const Layout = () => {
 
   const { authIsReady, user } = useAuthContext()
   return (
-    <Fragment>
-      {user ?<><Header />
+    (authIsReady  && <Fragment>
+     {user ?<> <Header />
       <div>
         <Routers />
       </div>
-      <Footer /> </>  : <Login />}
-    </Fragment>
+      <Footer></Footer> </> : <Login />}
+    </Fragment>)
   );
 };
 
