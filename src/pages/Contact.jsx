@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Container, Row, Col, Form, FormGroup, Input } from "reactstrap";
 import Helmet from "../components/Helmet/Helmet";
 import CommonSection from "../components/UI/CommonSection";
-
+import { v4 as uuid } from 'uuid';
 import "../styles/contact.css";
+import { db } from "../firebase/config";
+import { collection, doc, setDoc } from "firebase/firestore";
 
 const socialLinks = [
   {
@@ -26,6 +28,57 @@ const socialLinks = [
 ];
 
 const Contact = () => {
+
+  const newContactRef = doc(collection(db, "contact"));
+
+  const [contactMessage,setContactMessage] = useState({
+    name:"",
+    email:"",
+    message:"",
+  })
+
+  const handleInputChange = (e) =>{
+
+    e.preventDefault();
+    const { name, value } = e.target;
+
+    setContactMessage({
+      ...contactMessage,
+      [name]: value,
+    });
+  }
+
+
+
+  
+
+  const handleClick = async (e) => {
+    e.preventDefault()
+
+    setDoc(newContactRef, {
+      id:uuid(),
+      name:contactMessage.name,
+      email:contactMessage.email,
+      message:contactMessage.message,
+    });
+
+    console.log("refresh")
+
+    setContactMessage({
+      name:"",
+    email:"",
+    message:"",
+  })
+  }
+
+          
+
+    
+    
+
+  console.log(contactMessage)
+
+
   return (
     <Helmet title="Contact">
       <CommonSection title="Contact" />
@@ -37,20 +90,21 @@ const Contact = () => {
 
               <Form>
                 <FormGroup className="contact__form">
-                  <Input placeholder="Your Name" type="text" />
+                  <Input name="name" value={contactMessage.name} onChange={handleInputChange} placeholder="Your Name" type="text" />
                 </FormGroup>
                 <FormGroup className="contact__form">
-                  <Input placeholder="Email" type="email" />
+                  <Input name="email" value={contactMessage.email} onChange={handleInputChange}  placeholder="Email" type="email" />
                 </FormGroup>
                 <FormGroup className="contact__form">
                   <textarea
+                  name="message" value={contactMessage.message} onChange={handleInputChange} 
                     rows="5"
                     placeholder="Message"
                     className="textarea"
                   ></textarea>
                 </FormGroup>
 
-                <button className=" contact__btn" type="submit">
+                <button onClick={handleClick} className=" contact__btn" type="submit">
                   Send Message
                 </button>
               </Form>
@@ -60,16 +114,16 @@ const Contact = () => {
               <div className="contact__info">
                 <h6 className="fw-bold">Contact Information</h6>
                 <p className="section__description mb-0">
-                  123 ZindaBazar, Sylhet, Bangladesh
+                  Prajwal kumar, karnataka
                 </p>
                 <div className=" d-flex align-items-center gap-2">
                   <h6 className="fs-6 mb-0">Phone:</h6>
-                  <p className="section__description mb-0">+88683896366</p>
+                  <p className="section__description mb-0">+7019385449</p>
                 </div>
 
                 <div className=" d-flex align-items-center gap-2">
                   <h6 className="mb-0 fs-6">Email:</h6>
-                  <p className="section__description mb-0">example@gmail.com</p>
+                  <p className="section__description mb-0">prajwalkumaredu8@gmail.com</p>
                 </div>
 
                 <h6 className="fw-bold mt-4">Follow Us</h6>
