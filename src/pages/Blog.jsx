@@ -35,6 +35,7 @@ const Blog = () => {
     // await uploadBytes(LicenseRef, license);
     // const LicenseFile = await getDownloadURL(LicenseRef);
 
+
     const storageRef = ref(storage, `license-img/${license.name}/${user.uid}`);
     const LicenseFile = uploadBytesResumable(storageRef, license);
     console.log("updated");
@@ -74,21 +75,28 @@ const Blog = () => {
       }
     );
 
+    console.log(profilePhotoURL)
+    console.log(licenseURL)
 
-    await setDoc(
-      doc(db, "verification", user.uid),
-      {
-        fname:firstName,
-        lname:lastName,
-        address:address,
-        age:age,
-        profilePhotoURL,
-        licenseURL
 
-      },
-    ).catch((err) => {
-     console.log(err);
-    });
+    if(!profilePhotoURL && !licenseURL){
+
+    }else{
+      await setDoc(
+        doc(db, "verification", user.uid),
+        {
+          fname:firstName,
+          lname:lastName,
+          address:address,
+          age:age,
+          profilePhotoURL,
+          licenseURL
+        }
+        
+      ).catch((err) => {
+       console.log(err);
+      });
+    }
   };
 
 

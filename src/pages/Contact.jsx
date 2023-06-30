@@ -7,6 +7,7 @@ import { v4 as uuid } from 'uuid';
 import "../styles/contact.css";
 import { db } from "../firebase/config";
 import { collection, doc, setDoc } from "firebase/firestore";
+import { toast } from "react-toastify";
 
 const socialLinks = [
   {
@@ -54,21 +55,28 @@ const Contact = () => {
 
   const handleClick = async (e) => {
     e.preventDefault()
+    console.log("click")
 
     setDoc(newContactRef, {
       id:uuid(),
       name:contactMessage.name,
       email:contactMessage.email,
       message:contactMessage.message,
+
+      
+    }).catch((err) =>{
+      toast.error("SomeThing Problem!", {
+        position: toast.POSITION.TOP_CENTER
+      });
+      console.log(err)
     });
 
-    console.log("refresh")
+    toast.success("Message Sent Successfully !", {
+      position: toast.POSITION.TOP_CENTER
+    });
+    
 
-    setContactMessage({
-      name:"",
-    email:"",
-    message:"",
-  })
+    
   }
 
           

@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import {  useNavigate } from 'react-router-dom'
 import { auth, db } from '.././firebase/config'
 import { useAuthContext } from './useAuthContext'
+import { toast } from 'react-toastify'
 
 export const useLogin = () => {
 
@@ -25,6 +26,9 @@ export const useLogin = () => {
       const res = await signInWithEmailAndPassword(auth,email, password)
 
        if(res.user){
+        toast.success("Login Successfull", {
+          position: toast.POSITION.TOP_CENTER
+        });
         navigate('/')
        }
 
@@ -39,6 +43,9 @@ export const useLogin = () => {
       }
     } 
     catch(err) {
+      toast.error("Signup Successfull", {
+        position: toast.POSITION.TOP_CENTER
+      });
       if (!isCancelled) {
         setError(err.message)
         setIsPending(false)

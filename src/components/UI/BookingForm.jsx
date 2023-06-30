@@ -100,6 +100,21 @@ const BookingForm = () => {
       
     });
 
+    // setBookingDeatils({
+    //   fname: "",
+    //   lname: "",
+    //   email: "",
+    //   phone_number: "",
+    //   from: "",
+    //   to: "",
+    //   description: "",
+    //   luggage: "",
+    //   persons: "",
+    //   date: "",
+    //   time: "",
+    // })
+    
+
 
    
   };
