@@ -13,8 +13,9 @@ import "../styles/about.css";
 const About = () => {
   return (
     <Helmet title="About">
-      <CommonSection title="About Us" />
+      <CommonSection title="About Us"  />
       <AboutSection aboutClass="aboutPage" />
+      
 
       <section className="about__page-section">
         <Container>

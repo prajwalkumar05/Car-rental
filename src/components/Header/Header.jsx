@@ -148,16 +148,19 @@ const Header = () => {
               </div>
             </div>
 
-            <div className="nav__right">
+            <div className="nav__right flex">
               <div className="search__box">
                 <input type="text" placeholder="Search" />
                 <span>
                   <i class="ri-search-line"></i>
-                  <button onClick={() => logout()} style={{color:"#fff"}}>Logout</button>
+                  
                 </span>
               </div>
+              <button className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-1 px-4 rounded ml-12" onClick={() => logout()} style={{color:"#fff"}}>Logout</button>
             </div>
+            
           </div>
+          
         </Container>
       </div>
     </header>

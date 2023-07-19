@@ -8,6 +8,7 @@ import "../styles/contact.css";
 import { db } from "../firebase/config";
 import { collection, doc, setDoc } from "firebase/firestore";
 import { toast } from "react-toastify";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 const socialLinks = [
   {
@@ -29,6 +30,8 @@ const socialLinks = [
 ];
 
 const Contact = () => {
+
+  const { user } = useAuthContext();
 
   const newContactRef = doc(collection(db, "contact"));
 
@@ -58,7 +61,6 @@ const Contact = () => {
     console.log("click")
 
     setDoc(newContactRef, {
-      id:uuid(),
       name:contactMessage.name,
       email:contactMessage.email,
       message:contactMessage.message,
@@ -122,7 +124,7 @@ const Contact = () => {
               <div className="contact__info">
                 <h6 className="fw-bold">Contact Information</h6>
                 <p className="section__description mb-0">
-                  Prajwal kumar, karnataka
+                  Pragathi, karnataka
                 </p>
                 <div className=" d-flex align-items-center gap-2">
                   <h6 className="fs-6 mb-0">Phone:</h6>
@@ -131,7 +133,7 @@ const Contact = () => {
 
                 <div className=" d-flex align-items-center gap-2">
                   <h6 className="mb-0 fs-6">Email:</h6>
-                  <p className="section__description mb-0">prajwalkumaredu8@gmail.com</p>
+                  <p className="section__description mb-0">pragathi@gmail.com</p>
                 </div>
 
                 <h6 className="fw-bold mt-4">Follow Us</h6>

@@ -11,6 +11,8 @@ import Contact from "../pages/Contact";
 import Test from "../pages/Test";
 import Login from "../components/Auth/Login";
 import Signup from "../components/Auth/Signup";
+import Checkout from "../components/UI/Checkout";
+import Order from "../components/UI/Order";
 
 const Routers = () => {
   return (
@@ -26,6 +28,8 @@ const Routers = () => {
       <Route path="/login" element={<Login />} />
       <Route path="/test" element={<Test />} />
       <Route path="/sign" element={<Signup />} />
+      <Route path="/orders" element={<Order />} />
+      <Route path="/checkout" element={<Checkout />} />
     </Routes>
   );
 };

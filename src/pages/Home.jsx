@@ -13,15 +13,19 @@ import BecomeDriverSection from "../components/UI/BecomeDriverSection";
 import Testimonial from "../components/UI/Testimonial";
 
 import BlogList from "../components/UI/BlogList";
+import { useCollection } from "../hooks/useCollection";
 
 const Home = () => {
+
+  const {document} = useCollection("cars")
+
   return (
     <Helmet title="Home">
       {/* ============= hero section =========== */}
       <section className="p-0 hero__slider-section">
         <HeroSlider />
 
-        <div className="hero__form">
+        {/* <div className="hero__form">
           <Container>
             <Row className="form__row">
               <Col lg="4" md="4">
@@ -35,7 +39,7 @@ const Home = () => {
               </Col>
             </Row>
           </Container>
-        </div>
+        </div> */}
       </section>
       {/* =========== about section ================ */}
       <AboutSection />
@@ -61,7 +65,7 @@ const Home = () => {
               <h2 className="section__title">Hot Offers</h2>
             </Col>
 
-            {carData.slice(0, 6).map((item) => (
+            {document && document.slice(0, 6).map((item) => (
               <CarItem item={item} key={item.id} />
             ))}
           </Row>

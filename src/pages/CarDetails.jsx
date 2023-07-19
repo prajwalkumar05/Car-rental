@@ -8,6 +8,7 @@ import BookingForm from "../components/UI/BookingForm";
 import PaymentMethod from "../components/UI/PaymentMethod";
 import { useCollection } from "../hooks/useCollection";
 import useGetData from "../hooks/useGetData";
+import Checkout from "../components/UI/Checkout";
 
 const CarDetails = () => {
   const { slug } = useParams();
@@ -26,7 +27,7 @@ const CarDetails = () => {
       <section>
         <Container>
           <Row>
-            <Col lg="6">
+            <Col lg="6" >
               <img src={singleCarItem.image} alt="" className="w-100" />
             </Col>
 
@@ -36,19 +37,8 @@ const CarDetails = () => {
 
                 <div className=" d-flex align-items-center gap-5 mb-4 mt-3">
                   <h6 className="rent__price fw-bold fs-4">
-                    ${singleCarItem.price}.00 / Day
+                    RS.{singleCarItem.price}.00 / Day
                   </h6>
-
-                  <span className=" d-flex align-items-center gap-2">
-                    <span style={{ color: "#f9a826" }}>
-                      <i class="ri-star-s-fill"></i>
-                      <i class="ri-star-s-fill"></i>
-                      <i class="ri-star-s-fill"></i>
-                      <i class="ri-star-s-fill"></i>
-                      <i class="ri-star-s-fill"></i>
-                    </span>
-                    ( ratings)
-                  </span>
                 </div>
 
                 <p className="section__description">
@@ -90,7 +80,7 @@ const CarDetails = () => {
                 >
                   <span className=" d-flex align-items-center gap-1 section__description">
                     <i class="ri-map-pin-line" style={{ color: "#f9a826" }}></i>{" "}
-                    {singleCarItem.gps}
+                    {singleCarItem.fule}
                   </span>
 
                   <span className=" d-flex align-items-center gap-1 section__description">
@@ -98,7 +88,7 @@ const CarDetails = () => {
                       class="ri-wheelchair-line"
                       style={{ color: "#f9a826" }}
                     ></i>{" "}
-                    {singleCarItem.seatType}
+                    {singleCarItem.seat}
                   </span>
 
                   <span className=" d-flex align-items-center gap-1 section__description">
@@ -115,14 +105,15 @@ const CarDetails = () => {
             <Col lg="7" className="mt-5">
               <div className="booking-info mt-5">
                 <h5 className="mb-4 fw-bold ">Booking Information</h5>
-                <BookingForm />
+                <BookingForm price={singleCarItem.price} />
+                
               </div>
             </Col>
 
             <Col lg="5" className="mt-5">
               <div className="payment__info mt-5">
                 {/* <h5 className="mb-4 fw-bold ">Payment Information</h5> */}
-                {/* <PaymentMethod /> */}
+               
               </div>
             </Col>
           </Row>

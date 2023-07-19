@@ -6,11 +6,13 @@ import { db } from "../../firebase/config";
 import { Timestamp, collection, doc, setDoc } from "firebase/firestore";
 import useGetData from "../../hooks/useGetData";
 import { useFirestore } from "../../hooks/useFirestore";
+import Checkout from "./Checkout";
+import { toast } from "react-toastify";
 
-const BookingForm = () => {
+const BookingForm = ({price}) => {
   const { user } = useAuthContext();
 
-  const {updateDocument}=useFirestore('users')
+  const { updateDocument } = useFirestore("users");
 
   const newOrderRef = doc(collection(db, "orders"));
 
@@ -26,18 +28,18 @@ const BookingForm = () => {
     persons: "",
     date: "",
     time: "",
+    holderName:"",
+    cvv:"",
+    cardNumber:"",
+    
   });
 
-  const {result} = useGetData('users',user.uid)
-  console.log(result)
+  const { result } = useGetData("users", user.uid);
+  console.log(result);
 
-  if(!result){
-    return <p>Loading</p>
+  if (!result) {
+    return <p>Loading</p>;
   }
-
-
-
-
 
   console.log(bookingDeatils);
 
@@ -53,74 +55,75 @@ const BookingForm = () => {
     });
   };
 
-  
-   
-
   const submitHandler = async (event) => {
     event.preventDefault();
 
     const orderDetalis = {
-      firstName:bookingDeatils.fname,
-        lastname:bookingDeatils.lname,
-        email:bookingDeatils.email,
-        phone_number:bookingDeatils.phone_number,
-        from:bookingDeatils.from,
-        to:bookingDeatils.to,
-        description:bookingDeatils.description,
-        luggage:bookingDeatils.luggage,
-        persons:bookingDeatils.persons,
-        date:bookingDeatils.date,
-        time:bookingDeatils.time,
-        orderAt:Timestamp.fromDate(new Date())
-    }
+      firstName: bookingDeatils.fname,
+      lastname: bookingDeatils.lname,
+      email: bookingDeatils.email,
+      phone_number: bookingDeatils.phone_number,
+      from: bookingDeatils.from,
+      to: bookingDeatils.to,
+      description: bookingDeatils.description,
+      luggage: bookingDeatils.luggage,
+      persons: bookingDeatils.persons,
+      date: bookingDeatils.date,
+      time: bookingDeatils.time,
+      orderAt: Timestamp.fromDate(new Date()),
+      holderName:bookingDeatils.holderName,
+      pay:price,
+      cvv:bookingDeatils.cvv,
+      cardNumber:bookingDeatils.cardNumber,
 
+    };
 
+    await updateDocument(user.uid, [...result.orders, orderDetalis]);
 
-    
+    console.log("update");
 
-    await updateDocument(user.uid,
-      [...result.orders,orderDetalis]
-     )
-
-     console.log("update")
-
-     setDoc(newOrderRef, {
-      firstName:bookingDeatils.fname,
-      lastname:bookingDeatils.lname,
-      email:bookingDeatils.email,
-      phone_number:bookingDeatils.phone_number,
-      from:bookingDeatils.from,
-      to:bookingDeatils.to,
-      description:bookingDeatils.description,
-      luggage:bookingDeatils.luggage,
-      persons:bookingDeatils.persons,
-      date:bookingDeatils.date,
-      time:bookingDeatils.time,
-      orderAt:Timestamp.fromDate(new Date())
-      
+    setDoc(newOrderRef, {
+      firstName: bookingDeatils.fname,
+      lastname: bookingDeatils.lname,
+      email: bookingDeatils.email,
+      phone_number: bookingDeatils.phone_number,
+      from: bookingDeatils.from,
+      to: bookingDeatils.to,
+      description: bookingDeatils.description,
+      luggage: bookingDeatils.luggage,
+      persons: bookingDeatils.persons,
+      date: bookingDeatils.date,
+      time: bookingDeatils.time,
+      orderAt: Timestamp.fromDate(new Date()),
+      holderName:bookingDeatils.holderName,
+      pay:price,
+      cvv:bookingDeatils.cvv,
+      cardNumber:bookingDeatils.cardNumber,
     });
 
-    // setBookingDeatils({
-    //   fname: "",
-    //   lname: "",
-    //   email: "",
-    //   phone_number: "",
-    //   from: "",
-    //   to: "",
-    //   description: "",
-    //   luggage: "",
-    //   persons: "",
-    //   date: "",
-    //   time: "",
-    // })
     
 
+    setBookingDeatils({
+      fname: "",
+      lname: "",
+      email: "",
+      phone_number: "",
+      from: "",
+      to: "",
+      description: "",
+      luggage: "",
+      persons: "",
+      date: "",
+      time: "",
+    })
 
-   
+    toast.success("Order Successfull", {
+      position: toast.POSITION.TOP_CENTER,
+    });
   };
 
   return (
-    <Form >
+    <Form>
       <FormGroup className="booking__form d-inline-block me-4 mb-4">
         <input
           name="fname"
@@ -221,11 +224,60 @@ const BookingForm = () => {
           name="time"
           onChange={handleInputChange}
           value={bookingDeatils.time}
-          type="time"
+          type="date"
           placeholder="Journey Time"
           className="time__picker"
         />
       </FormGroup>
+
+      <h3>Card Details</h3>
+
+      <FormGroup className="booking__form d-inline-block ms-1 mb-4">
+        <label className="my-2 w-8 font-bold">Price</label>
+        <input
+          name="to"
+          onChange={handleInputChange}
+          value={price + " only"}
+          type="text"
+          
+        />
+      </FormGroup>
+
+      <FormGroup className="booking__form d-inline-block ms-1 mb-4">
+        <label className="my-2 font-bold ">Card Number</label>
+        <input
+          name="cardNumber"
+          onChange={handleInputChange}
+          value={bookingDeatils.cardNumber}
+          type="text"
+          
+        />
+      </FormGroup>
+
+      <FormGroup className="booking__form d-inline-block ms-1 mb-4">
+        <label className="my-2 font-bold ">CVV</label>
+        <input
+          name="cvv"
+          onChange={handleInputChange}
+          value={bookingDeatils.cvv}
+          type="text"
+          
+        />
+      </FormGroup>
+
+      
+      <FormGroup className="booking__form d-inline-block ms-1 mb-4">
+        <label className="my-2 font-bold ">Holder Name</label>
+        <input
+          name="holderName"
+          onChange={handleInputChange}
+          value={bookingDeatils.holderName}
+          type="text"
+          
+        />
+      </FormGroup>
+
+      
 
       <FormGroup>
         <textarea
@@ -238,28 +290,34 @@ const BookingForm = () => {
           placeholder="Write"
         ></textarea>
       </FormGroup>
+      <button
+        onClick={submitHandler}
+        
+        className="bg-[#f9a826] hover:[#c4aa81] text-white font-bold py-1 px-4 rounded-full"
+      >
+        Submit
+      </button>
 
-      <button onClick={submitHandler}>Submit</button>
+      
     </Form>
   );
 };
 
 export default BookingForm;
 
-
-    // await setDoc(doc(db, "orders", user.uid), {
-    //   firstName:bookingDeatils.fname,
-    //   lastname:bookingDeatils.lname,
-    //   email:bookingDeatils.email,
-    //   phone_number:bookingDeatils.phone_number,
-    //   from:bookingDeatils.from,
-    //   to:bookingDeatils.to,
-    //   description:bookingDeatils.description,
-    //   luggage:bookingDeatils.luggage,
-    //   persons:bookingDeatils.persons,
-    //   date:bookingDeatils.date,
-    //   time:bookingDeatils.time,
-    //   orderAt:Timestamp.fromDate(new Date())
-    // }).catch((err) => {
-    //   console.log(err);
-    // });
+// await setDoc(doc(db, "orders", user.uid), {
+//   firstName:bookingDeatils.fname,
+//   lastname:bookingDeatils.lname,
+//   email:bookingDeatils.email,
+//   phone_number:bookingDeatils.phone_number,
+//   from:bookingDeatils.from,
+//   to:bookingDeatils.to,
+//   description:bookingDeatils.description,
+//   luggage:bookingDeatils.luggage,
+//   persons:bookingDeatils.persons,
+//   date:bookingDeatils.date,
+//   time:bookingDeatils.time,
+//   orderAt:Timestamp.fromDate(new Date())
+// }).catch((err) => {
+//   console.log(err);
+// });
